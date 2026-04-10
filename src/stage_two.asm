@@ -17,7 +17,7 @@ STAGE_TWO:
     mov bx, 0x1000
 
     mov ah, 02h
-    mov al, 1
+    mov al, 2
     mov dh, 0
     mov ch, 0
     mov cl, 3
