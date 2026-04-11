@@ -103,8 +103,27 @@ CMD_RUN_SHELL:
     mov si, [command_args]
     lodsb
 
+    cmp al, '0'
+    jb .error_intinvalid
+    cmp al, '9'
+    ja .error_intinvalid
+
     sub al, '0'
 
+    mov bl, al
+
+    lodsb
+
+    cmp al, 0
+    je .skip_sec
+
+    cmp al, '0'
+    jb .error_intinvalid
+    cmp al, '9'
+    ja .error_intinvalid
+
+    ; apenas para lembrar: estou verificando se os dois bytes do buffer de args contém números válidos em ASCII depois convertendo para binário para ser aceito
+.skip_sec:
     xor cx, cx
     mov es, cx
     mov bx, 0x2000
@@ -121,11 +140,11 @@ CMD_RUN_SHELL:
     push cx
 
     mov al, [0x2000]
-    cmp al, "N"
+    cmp al, 0x4E
     jne .error_file
 
     mov al, [0x2000+1]
-    cmp al, "N"
+    cmp al, 0x4E
     jne .error_file
 
     mov al, [0x2000+2]
@@ -151,6 +170,11 @@ CMD_RUN_SHELL:
     call PRINT
 
     jmp SHELL_START
+.error_intinvalid:
+    mov si, cmd_run_interror
+    call PRINT
+
+    jmp SHELL_START
 
 ; required vars for shell
 
@@ -169,4 +193,5 @@ cmd_run db "run", 0
 ; commands vars helpers
 
 cmd_help_helper db "Command list: 'clear', 'echo <args>', 'help', 'run <sector>'", 0
-cmd_run_ferror db "Invalid file format.", 0
+cmd_run_ferror db "Invalid file format", 0
+cmd_run_interror db "Invalid number for sector", 0

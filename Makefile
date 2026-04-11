@@ -15,7 +15,7 @@ build/noname.img: build/boot.bin build/stage_two.bin build/kernel.bin build/temp
 	dd if=build/boot.bin of=build/noname.img conv=notrunc bs=512 seek=0
 	dd if=build/stage_two.bin of=build/noname.img conv=notrunc bs=512 seek=1
 	dd if=build/kernel.bin of=build/noname.img conv=notrunc bs=512 seek=2
-	dd if=build/temp_program.bin of=build/noname.img conv=notrunc bs=512 seek=4
+	dd if=build/temp_program.bin of=build/noname.img conv=notrunc bs=512 seek=10
 
 	qemu-system-i386 -fda build/noname.img
 
