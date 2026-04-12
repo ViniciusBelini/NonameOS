@@ -2,6 +2,8 @@
 [ORG 0x7C00]
 
 START1:
+    mov byte [device_id], dl
+
     cli
 
     xor ax, ax
@@ -31,6 +33,7 @@ START2:
     mov dh, 0
     mov ch, 0
     mov cl, 2
+    mov dl, [device_id]
 
     int 13h
 
@@ -74,6 +77,7 @@ clear:
     ret
 
 starting db "Starting OS...", 0
+device_id db 0x0
 
 times 510-($-$$) db 0
 dw 0AA55h

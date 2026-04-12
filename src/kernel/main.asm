@@ -1,6 +1,8 @@
 [ORG 0x1000]
 
 KERNEL:
+    mov byte [device_id], dl
+
     call CLEAR
 
     mov si, hello_kernel
@@ -26,3 +28,4 @@ KERNEL:
 ;--------------------------------;
 
 hello_kernel db "Hello world from Kernel!", 0
+device_id db 0x0

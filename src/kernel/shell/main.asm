@@ -110,6 +110,9 @@ CMD_RUN_SHELL:
 
     sub al, '0'
 
+    mov bl, 10
+    mul bl
+
     mov bl, al
 
     lodsb
@@ -122,7 +125,9 @@ CMD_RUN_SHELL:
     cmp al, '9'
     ja .error_intinvalid
 
-    ; apenas para lembrar: estou verificando se os dois bytes do buffer de args contém números válidos em ASCII depois convertendo para binário para ser aceito
+    sub al, '0'
+
+    add al, bl
 .skip_sec:
     xor cx, cx
     mov es, cx
@@ -140,11 +145,11 @@ CMD_RUN_SHELL:
     push cx
 
     mov al, [0x2000]
-    cmp al, 0x4E
+    cmp al, "N"
     jne .error_file
 
     mov al, [0x2000+1]
-    cmp al, 0x4E
+    cmp al, "F"
     jne .error_file
 
     mov al, [0x2000+2]
@@ -157,6 +162,8 @@ CMD_RUN_SHELL:
     mov ah, 02h
     mov dh, 0
     mov ch, 0
+
+    mov dl, [device_id]
 
     int 13h
 

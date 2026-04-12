@@ -1,6 +1,8 @@
 [ORG 0x7E00]
 
 STAGE_TWO:
+    mov byte [device_id], dl
+
     mov ah, 02h
     mov bh, 0
     mov dx, 0100h
@@ -21,6 +23,7 @@ STAGE_TWO:
     mov dh, 0
     mov ch, 0
     mov cl, 3
+    mov dl, [device_id]
 
     int 13h
 
@@ -44,3 +47,4 @@ print:
     ret
 
 starting_stage_two db "Starting stage two...", 0
+device_id db 0x0
