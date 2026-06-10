@@ -1,7 +1,7 @@
 [ORG 0x2000]
 [BITS 16]
 
-db "NF", 5
+db "NF", 1
 
 PROGRAM:
     mov si, hello

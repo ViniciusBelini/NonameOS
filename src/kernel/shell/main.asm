@@ -109,25 +109,6 @@ CMD_RUN_SHELL:
     ja .error_intinvalid
 
     sub al, '0'
-
-    mov bl, 10
-    mul bl
-
-    mov bl, al
-
-    lodsb
-
-    cmp al, 0
-    je .skip_sec
-
-    cmp al, '0'
-    jb .error_intinvalid
-    cmp al, '9'
-    ja .error_intinvalid
-
-    sub al, '0'
-
-    add al, bl
 .skip_sec:
     xor cx, cx
     mov es, cx
@@ -139,6 +120,7 @@ CMD_RUN_SHELL:
     mov al, 1
     mov dh, 0
     mov ch, 0
+    mov dl, [device_id]
 
     int 13h
 
